@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'teams.apps.TeamsConfig',
+    'multiselectfield',
     'crispy_forms',
     'PIL',
     'django.contrib.admin',
@@ -123,6 +124,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
