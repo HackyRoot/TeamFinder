@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Team # Member # TeamLead
+from . import models
 
-# admin.site.register(Member)
-admin.site.register(Team)
-# admin.site.register(TeamLead)
+registered_models = [models.Team, models.TeamManagement]
+
+admin.site.register(registered_models)
+
