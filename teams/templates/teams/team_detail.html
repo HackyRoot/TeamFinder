@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Team List!</h1>
+
+    <article class="media content-section">
+          <img class="rounded-circle team-img" src="{{ object.team_image.url }}">
+      <div class="media-body">
+
+        <div class="team-metadata">
+{#              <a class="mr-2" href="#">{{ team.id}}</a>#}
+          <small class="text-muted">{{ team.created_on|date:"d, F, Y" }}</small>
+        </div>
+
+{#            public team url#}
+        <h2 class="team_name">{{ object.team_name }}</></h2>
+        <h3><a class="team_lead" href="#">{{ object.team_members }}</a></h3>
+
+        <p class="team-content">
+                <a href="#">{{ object.team_member_1.username }}</a>
+                <a href="#">{{ object.team_member_2.username }}</a>
+                <a href="#">{{ object.team_member_3.username }}</a>
+        </p>
+      </div>
+    </article>
+
+{% endblock content %}

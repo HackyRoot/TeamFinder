@@ -4,7 +4,10 @@ from users.forms import UserRegisterForm
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
+from django.contrib.auth.models import User
 
+# from .filters import UserFilter
+# https://stackoverflow.com/questions/36327377/searching-with-modelchoicefield-in-django
 
 def register(request):
     if request.method == 'POST':
@@ -38,6 +41,7 @@ def profile(request):
             user = p_form.save()
             user.refresh_from_db()
             user.bio = p_form.cleaned_data.get('bio')
+            user.team_name = p_form.cleaned_data.get('team_name')
 
 
             user.save()
@@ -54,3 +58,14 @@ def profile(request):
     }
 
     return render(request, 'users/profile.html', context)
+
+# from django.views.generic import ListView, DetailView
+# from django_filters import views
+#
+# class UserListView(ListView):
+#     model = User
+#     template_name = views
+#
+# class UserDetailView(DetailView):
+#     model = User
+#     template_name = views

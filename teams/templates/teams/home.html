@@ -5,25 +5,27 @@
 
     {% for team in team_list %}
         <article class="media content-section">
-{#          <img class="rounded-circle team-img" src="{{ team.team_lead.profile.img.url }}">#}
+          <img class="rounded-circle team-img" src="{{ team.team_image.url }}">
           <div class="media-body">
 
             <div class="team-metadata">
-{#              <a class="mr-2" href="#">{{ team.id}}</a>#}
+              <a class="mr-2" href="#">{{ team.team_name}}</a>
               <small class="text-muted">{{ team.created_on|date:"d, F, Y" }}</small>
             </div>
 
-            <h2><a class="team_id" href="#">{{ team.team_id }}</a></h2>
-            <h3><a class="team_lead" href="#">{{ team.team_lead.username }}</a></h3>
+            <h2><a class="team_name" href="{% url 'team-detail' team.team_name %}">{{ team.team_name }}</a></h2>
+            <h3><a class="team_lead" href="#">{{ team.team_members }}</a></h3>
 
             <p class="team-content">
-                    <a href="#">{{ team.team_member_1.username }}</a>
-                    <a href="#">{{ team.team_member_2.username }}</a>
-                    <a href="#">{{ team.team_member_3.username }}</a>
+                    <a href="#">{{ team.username }}</a>
+                    <a href="#">{{ team.team_members }}</a>
+                    <a href="#">{{ team.team_members }}</a>
             </p>
           </div>
         </article>
     {% endfor %}
+
+{#    <h3>team_list</h3>#}
 
 
 {% endblock %}

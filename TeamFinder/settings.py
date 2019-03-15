@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'teams.apps.TeamsConfig',
     'multiselectfield',
     'crispy_forms',
+    'bootstrapform',
+    'django_filters',
     'PIL',
     'django.contrib.admin',
     'django.contrib.auth',

@@ -5,6 +5,7 @@ from django.dispatch import receiver
 import datetime
 from PIL import Image
 from multiselectfield import MultiSelectField
+from teams.models import Team
 
 SEX = [('male', 'Male'),
        ('female', 'Female'),
@@ -40,8 +41,7 @@ class Profile(models.Model):
     city = models.CharField(max_length=20, choices=CITIES, default='')
     contact_no = models.CharField(blank=True, max_length=15, default='0')
     qualification = MultiSelectField(max_length=30, choices=QUAL, default='bachelors')
-
-
+    # team_name = models.ForeignKey(Team, to_field='team_name', default='', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.user.username} Profile'

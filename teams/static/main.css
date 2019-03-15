@@ -36,7 +36,7 @@ ul {
   margin-bottom: 20px;
 }
 
-.team_id {
+.team_name {
   color: #444444;
 }
 
@@ -45,7 +45,7 @@ ul {
 }
 
 
-a.team_id:hover {
+a.team_name:hover {
   color: #428bca;
   text-decoration: none;
 }
