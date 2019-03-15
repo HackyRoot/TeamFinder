@@ -46,12 +46,10 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     contact_no = forms.IntegerField(required=True, validators = [RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                     message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")])
-    team_name = forms.ModelChoiceField(widget=forms.Select, to_field_name='team_name', queryset=Team.objects.all())
-
 
     class Meta:
         model = Profile
-        fields = ['image', 'contact_no', 'team_name', 'qualification', 'bio', 'gender', 'skills', 'city']
+        fields = ['image', 'contact_no', 'qualification', 'bio', 'gender', 'skills', 'city']
 
     # https: // simpleisbetterthancomplex.com / tutorial / 2016 / 11 / 28 / how - to - filter - querysets - dynamically.html
     def get_queryset(self):
