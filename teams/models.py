@@ -10,10 +10,10 @@ class Team(models.Model):
     team_lead = models.ForeignKey(User, null=True, blank=True, default=None, on_delete=models.CASCADE, related_name='team_lead_key')
     description = models.TextField(max_length=1024, default='')
     team_image = models.ImageField(default='default.jpg', upload_to='team_pics')
-    # team_members = models.ManyToManyField(User, through='Contact')
     created_on = models.DateField(default=timezone.now())
+    members = models.ManyToManyField(User)
 
-    # members = models.Oneto(User, blank=True, on_delete=models.CASCADE, null=True)
+
 
     def __str__(self):
         return f'{self.team_name}'
@@ -21,40 +21,22 @@ class Team(models.Model):
     def get_absolute_url(self):
         return reverse('team-detail', kwargs={'pk': self.pk})
 
-
-class TeamManagement(models.Model):
-    users = models.ManyToManyField(User)
-    current_team_lead = models.ForeignKey(User, related_name="lead", null=True, on_delete=models.CASCADE)
-    is_invited = models.BooleanField(default=False, null=False)
+    def get_absolute_url(self):
+        return reverse('team-detail', kwargs={'pk': self.pk})
 
     @classmethod
-    def add_member(cls, current_team_lead, new_member):
+    def add_member(cls, current_team, new_member):
         member, created = cls.objects.get_or_create(
-            current_team_lead=current_team_lead
+            current_team=current_team
         )
-        member.users.add(new_member)
+        member.members.add(new_member)
 
     @classmethod
     def remove_member(cls, current_team_lead, new_member):
         member, created = cls.objects.get_or_create(
             current_team_lead=current_team_lead
         )
-        member.users.remove(new_member)
-
-# https://www.youtube.com/watch?v=nwpLCa79DUw
-#     def remove_player(self, user_c, team_c):
-#         g = Team.objects.get(name=user_c)
-#         g.user_set.remove(user_c)
-
-    # def trasnfer_player(self, user_c, team_c):
-    #     pass
-
-
-# class Contact(models.Model):
-#     team_c = models.ForeignKey(Team,  on_delete=models.CASCADE) # to_field=Team.team_name,
-#     user_c = models.ForeignKey(User, on_delete=models.CASCADE) # to_field=User.username,
-#
-#     object = TeamLead
+        member.members.remove(new_member)
 
 
 # https://simpleisbetterthancomplex.com/tutorial/2018/01/18/how-to-implement-multiple-user-types-with-django.html
