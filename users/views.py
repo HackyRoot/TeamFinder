@@ -28,7 +28,8 @@ def register(request):
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Hi  {username}!, your account has been created! You are now able to login!')
+            first_name = form.cleaned_data.get('first_name')
+            messages.success(request, f'Hi  {first_name}, your account has been created!')
             return redirect('profile')
     else:
         form = UserRegisterForm()
@@ -70,13 +71,16 @@ def profile_details(request, pk):
     # Current user id: request.user.pk
     # Viewing profile id: Profile.objects.filter(pk=pk)
 
-    profile = Profile.objects.filter(pk=pk) # current viewing profile object
-    lead_data = Team.objects.filter(team_lead=request.user.pk) # team list where current user is lead
+    # user = User.objects.filter(pk=pk)
+    profiles = Profile.objects.filter(user=pk) # current viewing profile object
+    teams = Team.objects.filter(members=pk)
+    lead_data = Team.objects.filter(team_lead=pk) # team list where current user is lead
 
-    return render(request, 'users/profile_detail.html', context={'profile': profile, 'lead_data': lead_data})
+    return render(request, 'users/profile_detail.html', context={'profiles': profiles,'lead_data': lead_data, 'teams': teams})
+    # return HttpResponse(lead_data.team_lead)
 
-class ProfileDetailsView(DetailView):
-    model = Profile
+# class ProfileDetailsView(DetailView):
+#     model = Profile
 
     # def get_context_data(self, **kwargs):
     #     context = super(ProfileDetailsView, self).get_context_data(**kwargs)

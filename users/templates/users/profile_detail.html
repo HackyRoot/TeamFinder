@@ -2,49 +2,90 @@
 
 {% block content %}
 
-        {{ object.user.username }}
-        {{ object.skills }}
-        {{ object.gender }}
+        {{ prof.user }}
+    {% for prof in profiles %}
+
+        <div class="content-section">
+            <div class="media">
+                <img class="rounded-circle member-img" src="{{ prof.image.url }}">
+                <div class="media-body">
+                    <h2 class="team_name">{{ prof.user.first_name }} {{ prof.user.last_name }}</h2>
+                    <h4 class="account-heading">{{ prof.user.username }}</h4>
+                    <p class="text-secondary">{{ prof.user.email }}</p>
+                </div>
+            </div>
 
 
-{#    <h4>{{ object.user.username }}</h4>#}
-{#    <article class="media content-section">#}
-{#      <img class="rounded-circle team-img" src="{{ object.image.url }}">#}
-{#        <p>{{ object.user.email }}</p>#}
-{##}
-{#      <div class="media-body">#}
-{##}
-{#        <div class="team-metadata">#}
-{#          <a class="mr-2" href="#">{{ object.user.email }}</a>#}
-{##}
-{#        {% for team in myteams %}#}
-{#            <h3><a class="mr-2" href="#">{{ team.team_name }}</a></h3>#}
-{#        {% endfor %}#}
-{##}
-{#        {{ myteams }}#}
-{##}
-{##}
-{##}
-{##}
-{#            {% if team_lead == user %}#}
-{#                <a href="{% url 'manage_team' operation='add' pk=member.id%}">Add</a>#}
-{#                <a href="{% url 'manage_team' operation='remove' pk=member.id%}">Remove</a>#}
-{#            {% endif %}#}
-{#          <small class="text-muted">{{ team.created_on|date:"d, F, Y" }}</small>#}
-{#        </div>#}
-{##}
-{#        <h2><a class="team_name" href="{% url 'team-detail' object.team_name_id %}">{{ team.team_name }}</a></h2>#}
-{#        <h3><a class="team_lead" href="#">{{ team.team_members }}</a></h3>#}
+            <div class="profile-data">
 
+            <span>
+                {# if current user is team lead #}
+                <h3 class="team-content">Part of: </h3>
+                {% for team in lead_data %}
+                    {% if team.team_lead_id == prof.user_id %}
+                    <div class="profile-data">
+                        <li>
+                            <a href="{% url 'team-detail' team.team_name %}">{{ team.team_name }} (Lead)</a>
+                        </li>
+                    </div>
+                    {% endif %}
+                {% endfor %}
 
+                {# if current user is member of any team #}
+                <div class="profile-data">
+                    {% for team in teams %}
+                        <li>
+                            <a href="{% url 'team-detail' team.team_name %}">{{ team.team_name }}</a>
+                        </li>
+                    {% endfor %}
+                </div>
 
-{##}
-{#        <p class="t  m-content">#}
-{#            {% for member in object.members.all  %}#}
-{#                <a href="#">{{ member }}</a>#}
-{#            {% endfor  %}#}
-{#        </p>#}
-{#      </div>#}
-{#    </article>#}
+            </span>
 
+            <span>
+                {% if prof.skills %}<br>
+                    <h3 class="team-content">Skills: </h3>
+                        <p>{{ prof.skills }}</p>
+                {% endif %}
+            </span>
+
+            <span>
+                {% if prof.gender %}<br>
+                    <h3 class="team-content">Gender: </h3>
+                        <p>{{ prof.gender }}</p>
+                {% endif %}
+            </span>
+
+            <span>
+                {% if prof.city %}<br>
+                    <h3 class="team-content">City: </h3>
+                        <p>{{ prof.city }}</p>
+                {% endif %}
+            </span>
+
+            <span>
+                {% if prof.contact_no %}<br>
+                    <h3 class="team-content">Contact Number: </h3>
+                        <p>{{ prof.contact_no }}</p>
+                {% endif %}
+            </span>
+
+            <span>
+                {% if prof.qualification %}<br>
+                    <h3 class="team-content">Qualification: </h3>
+                        <p>{{ prof.qualification }}</p>
+                {% endif %}
+            </span>
+
+            <span>
+                {% if prof.bio %}<br>
+                    <h3 class="team-content">Bio: </h3>
+                        <p>{{ prof.bio }}</p>
+                {% endif %}
+            </span>
+
+            </div>
+
+        </div>
+    {% endfor %}
 {% endblock %}
