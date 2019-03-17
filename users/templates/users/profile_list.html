@@ -1,37 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{#    {% for profile in profile_list %}#}
-{#        <article class="media content-section">#}
-{#          <img class="rounded-circle team-img" src="{{ profile.image.url }}">#}
-{#            <h2>{{ profile }}</h2>#}
-{#            <h2>{{ profile.id }}</h2>#}
-{##}
-{#            <a href="{% url 'profile_data' profile.id %}">Profile</a>#}
-{##}
-{#      {% for member in object.members.all  %}#}
-{#          <h1>{{ member }}</h1>#}
-{#          <a href="{% url 'profile_data' member.id%}">{{ member }}</a>#}
-{#          {% if object.team_lead == user %}#}
-{#            <a href="{% url 'manage_team' operation='remove' pk=member.id%}">Remove</a>#}
-{#          {% endif %}#}
-{#          <h2>{{ member.id }}</h2>#}
-{#      {% endfor %}#}
-{#    {% endfor %}#}
+
     {% for profile in profile_list %}
         <article class="media content-section">
           <img class="rounded-circle team-img" src="{{ profile.image.url }}">
           <div class="media-body">
+
             <div class="article-metadata">
 
-            {% if profile.user.first_name %}
-              <h4><a class="mr-2" href="{% url 'profile_data' profile.user %}">{{ profile.user.first_name }} {{ profile.user.last_name }}</a></h4>
-            {% endif %}
+                {% if profile.user.first_name %}
+                    <h4><a class="mr-2" href="{% url 'profile_data' profile.id %}">{{ profile.user.first_name }} {{ profile.user.last_name }}</a></h4>
+                {% endif %}
 
-                <small><a href="{% url 'profile_data' profile.user %}" class="text-muted">{{ profile.user.email }}</a></small>
+                <small><a class="mr-2" href="{% url 'profile_data' profile.id %}" class="text-muted">{{ profile.user.email }}</a></small>
+
             </div>
-{#            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>#}
-            <p class="article-content">{{ post.content }}</p>
           </div>
         </article>
     {% endfor %}

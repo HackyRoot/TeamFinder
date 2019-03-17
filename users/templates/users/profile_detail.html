@@ -2,7 +2,6 @@
 
 {% block content %}
 
-        {{ prof.user }}
     {% for prof in profiles %}
 
         <div class="content-section">
@@ -81,6 +80,14 @@
                 {% if prof.bio %}<br>
                     <h3 class="team-content">Bio: </h3>
                         <p>{{ prof.bio }}</p>
+                {% endif %}
+            </span>
+
+
+            <span>
+                {% if prof.file %}<br>
+                    <h3 class="team-content">Related Files: </h3>
+                        <li class="ml-5"><a class="team-content" href="{{ prof.file.url }}">{{ prof.file.name }}</a></li>
                 {% endif %}
             </span>
 

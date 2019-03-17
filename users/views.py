@@ -48,6 +48,7 @@ def profile(request):
             user = p_form.save()
             user.refresh_from_db()
             user.bio = p_form.cleaned_data.get('bio')
+            user.file = p_form.cleaned_data.get('file')
             user.team_name = p_form.cleaned_data.get('team_name')
 
 

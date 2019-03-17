@@ -14,7 +14,6 @@ class Team(models.Model):
     members = models.ManyToManyField(User)
 
 
-
     def __str__(self):
         return f'{self.team_name}'
 

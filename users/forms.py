@@ -49,6 +49,7 @@ class ProfileUpdateForm(forms.ModelForm):
                                     message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")])
 
     # team_name = forms.ModelMultipleChoiceField(required=False, queryset=Team.objects.all(), widget=Select2MultipleWidget)
+    file = forms.FileField(required=False, widget=forms.ClearableFileInput)
 
     class Meta:
         model = Profile

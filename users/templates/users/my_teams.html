@@ -2,19 +2,32 @@
 
 {% block content %}
 
+    {% for team in teams  %}
+        <article class="media content-section">
+            <img class="rounded-circle team-img" src="{{ team.team_image.url }}">
+            <div class="media-body">
+                <div class="team-metadata">
+                    <h4><a class="mr-2" href="{% url 'team-detail' team.team_name%}">{{ team.team_name }}</a></h4>
+                </div>
+            </div>
+        </article>
+    {% endfor %}
 
-      {% for team in teams  %}
-          <h4>
-            <a href="{% url 'team-detail' team.team_name%}">{{ team.team_name }}</a>
-          </h4>
-      {% endfor %}
+    {% for lead in lead_data  %}
+        <article class="media content-section">
+            <img class="rounded-circle team-img" src="{{ lead.team_image.url }}">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <h4><a class="mr-2" href="{% url 'team-detail' lead.team_name%}">{{ lead.team_name }}</a></h4>
+                </div>
+            </div>
+        </article>
+    {% endfor %}
+
+{% endblock %}
 
 
-      {% for lead in lead_data%}
-          <h4>
-            <a href="{% url 'team-detail' lead.team_name%}">{{ lead.team_name }}</a>
-          </h4>
-      {% endfor %}
+
 
 
 
@@ -42,6 +55,3 @@
 
 
 {#    <h3>team_list</h3>#}
-
-
-{% endblock %}

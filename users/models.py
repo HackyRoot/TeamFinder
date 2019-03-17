@@ -44,6 +44,7 @@ class Profile(models.Model):
     qualification = MultiSelectField(max_length=30, choices=QUAL, default='bachelors')
     team_name = models.ForeignKey(Team, to_field='team_name', on_delete=models.CASCADE,
                                   related_name='team_profile', blank=True, null=True)
+    file = models.FileField(upload_to='documents', null=True)
 
     def __str__(self):
         return f'{self.user.username} Profile'

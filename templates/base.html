@@ -75,7 +75,7 @@
             <p class='text-muted'>
               <ul class="list-group">
               <a href="{% url 'myteam' request.user.pk %}">
-                <li class="list-group-item list-group-item-light url">My Team</li>
+                <li class="list-group-item list-group-item-light">My Team</li>
               </a>
               <a href="{% url 'home' %}" class="url">
                 <li class="list-group-item list-group-item-light">Team List</li>
@@ -85,6 +85,9 @@
               {% endif %}
               <a href="{% url 'profile' %}">
                 <li class="list-group-item list-group-item-light">Edit Profile</li>
+              </a>
+              <a href="{% url 'team-create' %}">
+                <li class="list-group-item list-group-item-light">Create New Team</li>
               </a>
               </ul>
             </p>

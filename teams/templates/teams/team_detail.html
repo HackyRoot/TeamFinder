@@ -1,39 +1,97 @@
 {% extends 'base.html' %}
 
+<style media="all">
+
+    h5 {display: inline;}
+
+</style>
 {% block content %}
-    <h1>Team Details!</h1>
+        <article class="media content-section">
 
-    <article class="media content-section">
-          <img class="rounded-circle team-img" src="{{ object.team_image.url }}">
-      <div class="media-body">
+            <img class="rounded-circle team-img" src="{{ object.team_image.url }}">
 
-        <div class="team-metadata">
-              <a class="mr-2" href="#">{{ team.id}}</a>
-          <small class="text-muted">{{ team.created_on|date:"d, F, Y" }}</small>
-          {% if object.team_lead == user %}
-              <div>
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'team-update' object.team_name %}">Update</a>
-                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'team-delete' object.team_name %}">Delete</a>
-              </div>
-          {% endif %}
+            <div class="media-body">
+
+                <div class="team-metadata">
+                    <small class="text-muted">{{ object.created_on|date:"F d, Y" }}</small>
+
+                    {% if object.team_lead == user %}
+                        <div>
+                            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'team-update' object.team_name %}">Update</a>
+                            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'team-delete' object.team_name %}">Delete</a>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+                <span>
+                <div class="team_name ml-2">
+                    <h2>Team Name: {{ team.team_name }}</h2><br>
+
+                    <h4 class="team_id">Team Lead</h4>
+                        <h5 style="display: inline"  ><li class="ml-4">
+                            <a class="team_lead" href="{% url 'profile_data' object.team_lead.id %}">{{ object.team_lead.first_name }}</a>
+                        </li></h5><br>
+
+                    <h4 class="team_id ml-">Team Members</h4>
+
+                    {% for member in object.members.all %}
+                        <li class="ml-4">
+
+                            <big class="member-list"><a class="team_lead" href="{% url 'profile_data' member.id%}">{{ member }}</a></big>
+
+                            {% if object.team_lead == user %}
+                                <a class="btn btn-danger btn-sm ml-50 mt-1 mb-1" href="{% url 'manage_team' operation='remove' pk=member.id%}">Remove</a>
+                            {% endif %}
+
+                        </li>
+                    {% endfor %}
+
+                    <br>
+                </div>
+                </span>
+
+                <span>
+                    <div>
+                        <h4 class="ml-3">Project idea</h4>
+                        <p class="ml-5">
+                            {{ team.description }}
+                        </p>
+                    </div>
+                </span>
+
+            </div>
+      </article>
 
 
-      {% for member in object.members.all  %}
-          <h1>{{ member }}</h1>
-          <a href="{% url 'profile_data' member.id%}">{{ member }}</a>
-          {% if object.team_lead == user %}
-{#            <a href="{% url 'manage_team' operation='add' pk=member.id%}">Add</a>#}
-            <a href="{% url 'manage_team' operation='remove' pk=member.id%}">Remove</a>
-          {% endif %}
-          <h2>{{ member.id }}</h2>
-      {% endfor  %}
-        <h3 class="team_lead">{{ object.team_lead }}</h3>
 
-
-        <p class="team-content">
-            <a href="#">{{ object.description }}</a>
-        </p>
-      </div>
-    </article>
 
 {% endblock content %}
+
+{#  <article class="media content-section">#}
+{#          <img class="rounded-circle team-img" src="{{ object.team_image.url }}">#}
+{#      <div class="media-body">#}
+{##}
+{#        <div class="team-metadata">#}
+{#              <a class="mr-2" href="#">{{ team.id}}</a>#}
+{#          <small class="text-muted">{{ team.created_on|date:"d, F, Y" }}</small>#}
+
+{##}
+{##}
+{#      {% for member in object.members.all  %}#}
+{#          <h1>{{ member }}</h1>#}
+{#          <a href="{% url 'profile_data' member.id%}">{{ member }}</a>#}
+{#          {% if object.team_lead == user %}#}
+{#            <a href="{% url 'manage_team' operation='add' pk=member.id%}">Add</a>#}
+{#            <a href="{% url 'manage_team' operation='remove' pk=member.id%}">Remove</a>#}
+{#          {% endif %}#}
+{#          <h2>{{ member.id }}</h2>#}
+{#      {% endfor  %}#}
+{#        <h3 class="team_lead">{{ object.team_lead }}</h3>#}
+{##}
+{##}
+{#        <p class="team-content">#}
+{#            <a href="#">{{ object.description }}</a>#}
+{#        </p>#}
+{#      </div>#}
+{#    </article>#}

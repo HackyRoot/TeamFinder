@@ -1,36 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Team List!</h1>
 
     {% for team in team_list %}
 
-        <h4>{{ team }}</h4>
         <article class="media content-section">
           <img class="rounded-circle team-img" src="{{ team.team_image.url }}">
-          <div class="media-body">
 
-            <div class="team-metadata">
-              <a class="mr-2" href="#">{{ team.team_name}}</a>
-              <small class="text-muted">{{ team.created_on|date:"d, F, Y" }}</small>
+
+            <div class="media-body">
+
+              <div class="team-metadata">
+                <small class="text-muted">{{ team.created_on|date:"d, F, Y" }}</small>
             </div>
 
-            <h2><a class="team_name" href="{% url 'team-detail' team.team_name %}">{{ team.team_name }}</a></h2>
-            <h3><a class="team_lead" href="#">{{ team.team_members }}</a></h3>
+          <div class="team_id">
+              <h4><a class="mr-2" href="{% url 'team-detail' team.team_name %}" class="text-muted">{{ team.team_name }}</a></h4>
+              <small><a class="mr-2" href="{% url 'profile_data' team.team_lead.id %}">Led by: {{ team.team_lead.first_name }}</a></small>
+          </div>
 
 
-
-
-            <p class="t  m-content">
-                {% for member in object.members.all  %}
-                    <a href="#">{{ member }}</a>
-                {% endfor  %}
-            </p>
           </div>
         </article>
     {% endfor %}
-
-{#    <h3>team_list</h3>#}
-
 
 {% endblock %}
