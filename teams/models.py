@@ -21,22 +21,34 @@ class Team(models.Model):
     def get_absolute_url(self):
         return reverse('team-detail', kwargs={'pk': self.pk})
 
-    def get_absolute_url(self):
-        return reverse('team-detail', kwargs={'pk': self.pk})
 
     @classmethod
-    def add_member(cls, current_team, new_member):
-        member, created = cls.objects.get_or_create(
-            current_team=current_team
+    def add_member(cls, current_team, member):
+        mem_obj = cls.objects.get(
+            team_name=current_team
         )
-        member.members.add(new_member)
-
-    @classmethod
-    def remove_member(cls, current_team_lead, new_member):
-        member, created = cls.objects.get_or_create(
-            current_team_lead=current_team_lead
-        )
-        member.members.remove(new_member)
+        mem_obj.members.add(member)
+    #
+    # @classmethod
+    # def remove_member(cls, current_team, member):
+    #     mem_obj, created = cls.objects.get_or_create(
+    #         current_team=current_team
+    #     )
+    #     mem_obj.members.remove(member)
+    # @classmethod
+    # def add_member(cls, current_team_lead, new_member):
+    #     member, created = cls.objects.get_or_create(
+    #         current_team_lead=current_team_lead
+    #     )
+    #     member.users.add(new_member)
+    #
+    # @classmethod
+    # def remove_member(cls, a, new_member):
+    #     member, created = cls.objects.get_or_create(
+    #         current_team_lead=current_team_lead
+    #     )
+    #
+    #     member.users.remove(new_member)
 
 
 # https://simpleisbetterthancomplex.com/tutorial/2018/01/18/how-to-implement-multiple-user-types-with-django.html

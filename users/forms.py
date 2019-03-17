@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import Profile
 from teams.models import Team
 from django.core.validators import RegexValidator
+from django_select2.forms import Select2MultipleWidget
 
 SKILLS = [('frontend', 'Front End'),
           ('backend', 'Back End'),
@@ -46,6 +47,8 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     contact_no = forms.IntegerField(required=True, validators = [RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                     message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")])
+
+    team_name = forms.ModelMultipleChoiceField(required=False, queryset=Team.objects.all(), widget=Select2MultipleWidget)
 
     class Meta:
         model = Profile

@@ -3,29 +3,36 @@
 {% block content %}
     <h1>Team List!</h1>
 
-    <article class="media content-section">
-          <img class="rounded-circle team-img" src="{{ object.team_image.url }}">
-      <div class="media-body">
-
-        <div class="team-metadata">
+{#    <article class="media content-section">#}
+{#          <img class="rounded-circle team-img" src="{{ object.team_image.url }}">#}
+{#      <div class="media-body">#}
+{##}
+{#        <div class="team-metadata">#}
 {#              <a class="mr-2" href="#">{{ team.id}}</a>#}
-          <small class="text-muted">{{ team.created_on|date:"d, F, Y" }}</small>
-          {% if object.team_lead == user %}
-              <div>
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'team-update' object.team_name %}">Update</a>
-                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'team-delete' object.team_name %}">Delete</a>
-              </div>
-          {% endif %}
-        </div>
+{#          <small class="text-muted">{{ team.created_on|date:"d, F, Y" }}</small>#}
+{#          {% if object.team_lead == user %}#}
+{#              <div>#}
+{#                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'team-update' object.team_name %}">Update</a>#}
+{#                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'team-delete' object.team_name %}">Delete</a>#}
+{#              </div>#}
+{#          {% endif %}#}
+{#        </div>#}
 
-        <h2 class="team_name">{{ object.team_name }}></h2>
-        <h3 class="team_lead">{{ object.team_lead }}></h3>
-
-
-        <p class="team-content">
-            <a href="#">{{ object.description }}</a>
-        </p>
-      </div>
-    </article>
+{#    <h1>{{ object.members.all }}</h1>#}
+            {% object.members.filter(team_name='A Team') %}
+{#      {% for member in object.members.all  %}#}
+{#          <h1>{{ member }}</h1>#}
+{#          <h4>profile id here</h4>#}
+{#          <h2>{{ member.id }}</h2>#}
+{##}
+{#      {% endfor  %}#}
+{#        <h3 class="team_lead">{{ object.team_lead }}</h3>#}
+{##}
+{##}
+{#        <p class="team-content">#}
+{#            <a href="#">{{ object.description }}</a>#}
+{#        </p>#}
+{#      </div>#}
+{#    </article>#}
 
 {% endblock content %}

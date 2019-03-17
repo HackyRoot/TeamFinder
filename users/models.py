@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import datetime
+from django.urls import reverse
 from PIL import Image
 from multiselectfield import MultiSelectField
 from teams.models import Team
@@ -41,7 +42,8 @@ class Profile(models.Model):
     city = models.CharField(max_length=20, choices=CITIES, default='')
     contact_no = models.CharField(blank=True, max_length=15, default='0')
     qualification = MultiSelectField(max_length=30, choices=QUAL, default='bachelors')
-    # team_name = models.ForeignKey(Team, to_field='team_name', default='', on_delete=models.CASCADE)
+    team_name = models.ForeignKey(Team, to_field='team_name', on_delete=models.CASCADE,
+                                  related_name='team_profile', blank=True, null=True)
 
     def __str__(self):
         return f'{self.user.username} Profile'
@@ -55,3 +57,8 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
+
+    def get_absolute_url(self):
+        return reverse('profile_data', kwargs={'pk': self.pk })
+
+

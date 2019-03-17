@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h4>{{ object.user.username }}</h4>
+    <article class="media content-section">
+      <img class="rounded-circle team-img" src="{{ object.image.url }}">
+      <div class="media-body">
+
+        <div class="team-metadata">
+          <a class="mr-2" href="#">{{ object.email }}</a>
+{#          <small class="text-muted">{{ team.created_on|date:"d, F, Y" }}</small>#}
+        </div>
+
+        <h2><a class="team_name" href="{% url 'team-detail' object.team_name_id %}">{{ team.team_name }}</a></h2>
+{#        <h3><a class="team_lead" href="#">{{ team.team_members }}</a></h3>#}
+
+
+
+{##}
+{#        <p class="t  m-content">#}
+{#            {% for member in object.members.all  %}#}
+{#                <a href="#">{{ member }}</a>#}
+{#            {% endfor  %}#}
+{#        </p>#}
+      </div>
+    </article>
+
+{% endblock %}

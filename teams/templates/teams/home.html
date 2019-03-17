@@ -4,6 +4,8 @@
     <h1>Team List!</h1>
 
     {% for team in team_list %}
+
+        <h4>{{ team }}</h4>
         <article class="media content-section">
           <img class="rounded-circle team-img" src="{{ team.team_image.url }}">
           <div class="media-body">
@@ -16,10 +18,13 @@
             <h2><a class="team_name" href="{% url 'team-detail' team.team_name %}">{{ team.team_name }}</a></h2>
             <h3><a class="team_lead" href="#">{{ team.team_members }}</a></h3>
 
-            <p class="team-content">
-                    <a href="#">{{ team.username }}</a>
-                    <a href="#">{{ team.team_members }}</a>
-                    <a href="#">{{ team.team_members }}</a>
+
+
+
+            <p class="t  m-content">
+                {% for member in object.members.all  %}
+                    <a href="#">{{ member }}</a>
+                {% endfor  %}
             </p>
           </div>
         </article>

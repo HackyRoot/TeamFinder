@@ -1,11 +1,16 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from users.forms import UserRegisterForm
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.models import User
+from .models import Profile
+from django.shortcuts import get_object_or_404
 
+from teams.models import Team
+from django.views.generic import ListView, TemplateView, DetailView, UpdateView
 # from .filters import UserFilter
 # https://stackoverflow.com/questions/36327377/searching-with-modelchoicefield-in-django
 
@@ -59,13 +64,45 @@ def profile(request):
 
     return render(request, 'users/profile.html', context)
 
+
+class ProfileDetailsView(DetailView):
+    model = Profile
+
+    # def get(self, request, *args, **kwargs):
+    #     return self.request.user.username
+
+    # def get_object(self):
+
+    #
+    # def get_context_data(self, **kwargs):
+    #     context = super(ProfileDetailsView, self).get_context_data(**kwargs)
+    #     context['team_lead'] = Team.objects.filter(team_lead_id=self.request.user) # add extra field to the context
+    #
+    #     return context
+    #
+    # def test_func(self):
+    #     profile = self.get_object()
+    #     if self.request.user == profile.user:
+    #         return True
+    #     return False
+
+
+
+
+
 # from django.views.generic import ListView, DetailView
 # from django_filters import views
 #
-# class UserListView(ListView):
-#     model = User
-#     template_name = views
+class ProfileListView(ListView):
+    model = Profile
+    context_object_name = 'profile_list'
+
+
 #
 # class UserDetailView(DetailView):
 #     model = User
 #     template_name = views
+
+#
+#
+
