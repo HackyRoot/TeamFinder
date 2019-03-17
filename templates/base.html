@@ -74,10 +74,18 @@
             <h3>Team Corner</h3>
             <p class='text-muted'>
               <ul class="list-group">
-                <li class="list-group-item list-group-item-light">My Team</li>
+              <a href="{% url 'myteam' request.user.pk %}">
+                <li class="list-group-item list-group-item-light url">My Team</li>
+              </a>
+              <a href="{% url 'home' %}" class="url">
                 <li class="list-group-item list-group-item-light">Team List</li>
-                <li class="list-group-item list-group-item-light">Notification</li>
+              </a>
+              {% if object.team_lead == user.id %}
+                <li class="list-group-item list-group-item-light">Manage Team</li>
+              {% endif %}
+              <a href="{% url 'profile' %}">
                 <li class="list-group-item list-group-item-light">Edit Profile</li>
+              </a>
               </ul>
             </p>
           </div>

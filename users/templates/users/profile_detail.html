@@ -2,17 +2,38 @@
 
 {% block content %}
 
-    <h4>{{ object.user.username }}</h4>
-    <article class="media content-section">
-      <img class="rounded-circle team-img" src="{{ object.image.url }}">
-      <div class="media-body">
+        {{ object.user.username }}
+        {{ object.skills }}
+        {{ object.gender }}
 
-        <div class="team-metadata">
-          <a class="mr-2" href="#">{{ object.email }}</a>
+
+{#    <h4>{{ object.user.username }}</h4>#}
+{#    <article class="media content-section">#}
+{#      <img class="rounded-circle team-img" src="{{ object.image.url }}">#}
+{#        <p>{{ object.user.email }}</p>#}
+{##}
+{#      <div class="media-body">#}
+{##}
+{#        <div class="team-metadata">#}
+{#          <a class="mr-2" href="#">{{ object.user.email }}</a>#}
+{##}
+{#        {% for team in myteams %}#}
+{#            <h3><a class="mr-2" href="#">{{ team.team_name }}</a></h3>#}
+{#        {% endfor %}#}
+{##}
+{#        {{ myteams }}#}
+{##}
+{##}
+{##}
+{##}
+{#            {% if team_lead == user %}#}
+{#                <a href="{% url 'manage_team' operation='add' pk=member.id%}">Add</a>#}
+{#                <a href="{% url 'manage_team' operation='remove' pk=member.id%}">Remove</a>#}
+{#            {% endif %}#}
 {#          <small class="text-muted">{{ team.created_on|date:"d, F, Y" }}</small>#}
-        </div>
-
-        <h2><a class="team_name" href="{% url 'team-detail' object.team_name_id %}">{{ team.team_name }}</a></h2>
+{#        </div>#}
+{##}
+{#        <h2><a class="team_name" href="{% url 'team-detail' object.team_name_id %}">{{ team.team_name }}</a></h2>#}
 {#        <h3><a class="team_lead" href="#">{{ team.team_members }}</a></h3>#}
 
 
@@ -23,7 +44,7 @@
 {#                <a href="#">{{ member }}</a>#}
 {#            {% endfor  %}#}
 {#        </p>#}
-      </div>
-    </article>
+{#      </div>#}
+{#    </article>#}
 
 {% endblock %}

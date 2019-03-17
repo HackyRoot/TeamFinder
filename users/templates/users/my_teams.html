@@ -1,26 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% for profile in profile_list %}
-        <article class="media content-section">
-          <img class="rounded-circle team-img" src="{{ profile.image.url }}">
-            <h2>{{ profile }}</h2>
-            <h2>{{ profile.id }}</h2>
 
-            <a href="{% url 'profile_data' profile.id %}">Profile</a>
 
-      {% for member in object.members.all  %}
-          <h1>{{ member }}</h1>
-          <a href="{% url 'profile_data' member.id%}">{{ member }}</a>
-          {% if object.team_lead == user %}
-            <a href="{% url 'manage_team' operation='remove' pk=member.id%}">Remove</a>
-          {% endif %}
-          <h2>{{ member.id }}</h2>
-      {% endfor  %}
+      {% for team in teams  %}
+          <h4>
+            <a href="{% url 'team-detail' team.team_name%}">{{ team.team_name }}</a>
+          </h4>
+      {% endfor %}
 
-        <
 
-          <div class="media-body">
+      {% for lead in lead_data%}
+          <h4>
+            <a href="{% url 'team-detail' lead.team_name%}">{{ lead.team_name }}</a>
+          </h4>
+      {% endfor %}
+
+
+
+{##}
+{#      {% for team in team_lead  %}#}
+{#          <h1>{{ team.team_lead }}</h1>#}
+{#          <a href="{% url 'team-detail' team.team_name %}">Team</a>#}
+{#      {% endfor %}#}
+
+
 
 {#            <div class="team-metadata">#}
 {#              <a class="mr-2" href="#">{{ team.team_name}}</a>#}
@@ -35,9 +39,7 @@
 {#                    <a href="#">{{ team.team_members }}</a>#}
 {#                    <a href="#">{{ team.team_members }}</a>#}
 {#            </p>#}
-          </div>
-        </article>
-    {% endfor %}
+
 
 {#    <h3>team_list</h3>#}
 

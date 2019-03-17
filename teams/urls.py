@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-from .views import TeamListView, TeamCreateView, TeamDeleteView, TeamUpdateView, TeamDetailView, manage_team
+from .views import TeamListView, TeamCreateView, \
+    TeamDeleteView, TeamUpdateView, TeamDetailView, manage_team, InviteView, sendInvite
 
 
 from django.urls import reverse
@@ -15,7 +16,8 @@ urlpatterns = [
     path('team/<pk>/delete/', TeamDeleteView.as_view(), name='team-delete'),
     path('about/', views.about, name='about'),
     path('profiles/<pk>/<operation>/', manage_team, name='manage_team'),
-
+    path('invite/', InviteView.as_view(), name='invite_mem'),
+    path('profiles/<pk>/<operation>/<team_name>/invitation/', views.sendInvite, name='send_invite'),
+]
     # path('accounts/profile/add', views.add_member, name='add_member'),
     # path('accounts/profile/remove', views.remove_member, name='remove_member'),
-]

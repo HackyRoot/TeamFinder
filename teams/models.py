@@ -28,6 +28,13 @@ class Team(models.Model):
             team_name=current_team
         )
         mem_obj.members.add(member)
+
+    @classmethod
+    def remove_member(cls, current_team, member):
+        mem_obj = cls.objects.get(
+            team_name=current_team
+        )
+        mem_obj.members.remove(member)
     #
     # @classmethod
     # def remove_member(cls, current_team, member):

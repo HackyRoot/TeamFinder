@@ -8,7 +8,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Profile
 from django.shortcuts import get_object_or_404
-
+from django.http import HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from teams.models import Team
 from django.views.generic import ListView, TemplateView, DetailView, UpdateView
 # from .filters import UserFilter
@@ -64,19 +65,24 @@ def profile(request):
 
     return render(request, 'users/profile.html', context)
 
+# not so usefil
+def profile_details(request, pk):
+    # Current user id: request.user.pk
+    # Viewing profile id: Profile.objects.filter(pk=pk)
+
+    profile = Profile.objects.filter(pk=pk) # current viewing profile object
+    lead_data = Team.objects.filter(team_lead=request.user.pk) # team list where current user is lead
+
+    return render(request, 'users/profile_detail.html', context={'profile': profile, 'lead_data': lead_data})
 
 class ProfileDetailsView(DetailView):
     model = Profile
 
-    # def get(self, request, *args, **kwargs):
-    #     return self.request.user.username
-
-    # def get_object(self):
-
-    #
     # def get_context_data(self, **kwargs):
     #     context = super(ProfileDetailsView, self).get_context_data(**kwargs)
-    #     context['team_lead'] = Team.objects.filter(team_lead_id=self.request.user) # add extra field to the context
+    #     # user_name = User.objects.get(username=self.request.user)
+    #     context['lead_data'] = Team.objects.filter(team_lead=self.request.user.pk)
+    #     context['myteams'] = Team.objects.filter(members=self.request.user.pk)
     #
     #     return context
     #
@@ -93,16 +99,40 @@ class ProfileDetailsView(DetailView):
 # from django.views.generic import ListView, DetailView
 # from django_filters import views
 #
+
+
 class ProfileListView(ListView):
     model = Profile
     context_object_name = 'profile_list'
 
+    def get_context_data(self, **kwargs):
+        context = super(ProfileListView, self).get_context_data(**kwargs)
+        context['myteams'] = Team.objects.filter(team_lead_id=self.request.user)
+        context['myteams'] = Team.objects.filter(members=self.request.user)
 
-#
-# class UserDetailView(DetailView):
-#     model = User
-#     template_name = views
+        return context
 
-#
-#
 
+## NOT SURE
+class MyTeamView(DetailView, UserPassesTestMixin, LoginRequiredMixin):
+    model = Team
+
+    context_object_name = 'myteam'
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Team.objects.filter(members=self.request.user)
+        else:
+            return Team.objects.none()
+
+    def test_func(self):
+        team = self.get_object()
+        if self.request.user == team.team_lead:
+            return True
+        return False
+
+# using this one
+def myteam(request, pk):
+    lead_data = Team.objects.filter(team_lead=pk)
+    teams = Team.objects.filter(members=pk)
+    return render(request, 'users/my_teams.html', context={'teams': teams, 'lead_data': lead_data})

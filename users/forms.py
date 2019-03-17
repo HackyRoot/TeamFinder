@@ -48,13 +48,12 @@ class ProfileUpdateForm(forms.ModelForm):
     contact_no = forms.IntegerField(required=True, validators = [RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                     message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")])
 
-    team_name = forms.ModelMultipleChoiceField(required=False, queryset=Team.objects.all(), widget=Select2MultipleWidget)
+    # team_name = forms.ModelMultipleChoiceField(required=False, queryset=Team.objects.all(), widget=Select2MultipleWidget)
 
     class Meta:
         model = Profile
         fields = ['image', 'contact_no', 'qualification', 'bio', 'gender', 'skills', 'city']
 
-    # https: // simpleisbetterthancomplex.com / tutorial / 2016 / 11 / 28 / how - to - filter - querysets - dynamically.html
     def get_queryset(self):
         query = self.request.GET.get('q')
         if query:
