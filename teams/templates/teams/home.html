@@ -16,7 +16,7 @@
 
           <div class="team_id">
               <h4><a class="mr-2" href="{% url 'team-detail' team.team_name %}" class="text-muted">{{ team.team_name }}</a></h4>
-              <small><a class="mr-2" href="{% url 'profile_data' team.team_lead.id %}">Led by: {{ team.team_lead.first_name }}</a></small>
+              <small><a class="mr-2" href="{% url 'profile_data' team.team_lead.id %}">Team lead: {{ team.team_lead.first_name }}</a></small>
           </div>
 
 
