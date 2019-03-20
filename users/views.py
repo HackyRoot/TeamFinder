@@ -75,10 +75,11 @@ def profile_details(request, pk):
     # user = User.objects.filter(pk=pk)
     profiles = Profile.objects.filter(user=pk) # current viewing profile object
     teams = Team.objects.filter(members=pk)
+    team_data = Team.objects.all()
     lead_data = Team.objects.filter(team_lead=pk) # team list where current user is lead
 
-    return render(request, 'users/profile_detail.html', context={'profiles': profiles,'lead_data': lead_data, 'teams': teams})
-    # return HttpResponse(lead_data.team_lead)
+    return render(request, 'users/profile_detail.html', context={'profiles': profiles,'lead_data': lead_data, 'teams': teams, 'team_data': team_data })
+    # return HttpResponse(lead_data)
 
 # class ProfileDetailsView(DetailView):
 #     model = Profile
@@ -101,6 +102,7 @@ def profile_details(request, pk):
 
 
 
+
 # from django.views.generic import ListView, DetailView
 # from django_filters import views
 #
@@ -118,7 +120,6 @@ class ProfileListView(ListView):
         return context
 
 
-## NOT SURE
 class MyTeamView(DetailView, UserPassesTestMixin, LoginRequiredMixin):
     model = Team
 
@@ -136,7 +137,7 @@ class MyTeamView(DetailView, UserPassesTestMixin, LoginRequiredMixin):
             return True
         return False
 
-# using this one
+
 def myteam(request, pk):
     lead_data = Team.objects.filter(team_lead=pk)
     teams = Team.objects.filter(members=pk)

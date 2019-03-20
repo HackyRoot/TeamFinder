@@ -7,7 +7,7 @@ from django.utils import timezone
 
 class Team(models.Model):
     team_name = models.CharField(max_length=50, unique=True, default='', primary_key=True)
-    team_lead = models.ForeignKey(User, null=True, blank=True, default=None, on_delete=models.CASCADE, related_name='team_lead_key')
+    team_lead = models.OneToOneField(User, null=True, blank=True, default=None, on_delete=models.CASCADE, unique=True, related_name='team_lead_key')
     description = models.TextField(max_length=1024, default='')
     team_image = models.ImageField(default='default.jpg', upload_to='team_pics')
     created_on = models.DateField(default=timezone.now())
