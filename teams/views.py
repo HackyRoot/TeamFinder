@@ -10,6 +10,7 @@ from django.contrib import messages
 from .forms import TeamManageForm
 from django.core.mail import send_mail
 from django.http import HttpResponse
+from django.db import IntegrityError
 
 def home(request):
     # context = {
@@ -53,18 +54,6 @@ class TeamListView(ListView):
 
 class TeamDetailView(DetailView):
     model = Team
-
-
-
-
-
-# def team_detail(request, pk):
-#
-#     context = {
-#         'team_data': Team.objects.all(),
-#         # 'member': Team.objects.filter(team_name_id=request.team_name),
-#     }
-#     return render(request, 'teams/team_detail.html', context)
 
 
 class TeamCreateView(LoginRequiredMixin, CreateView):
@@ -130,32 +119,6 @@ def team(request):
 
 
 def manage_team(request, operation, pk):
-    # userid = member_profile_id
-    # request.user = team_lead_name
-    # team = Team.objects.get(team_lead=2)
-    # team_name = team.team_name
-    #
-    # if request.method == 'POST':
-    #     form = TeamManageForm(request.user, request.POST)
-    #     if form.is_valid():
-    #         mem = form.save()
-    #         mem.user = request.user
-    #         mem.save()
-    #         return redirect('team-detail')
-    # else:
-    #     form = TeamManageForm(request.user)
-    # return render(request, 'teams/team.html', {'form':form})
-
-    # try:
-    #     user_obj = User.objects.get(pk=pk)
-    #     team = Team.objects.get(team_lead=request.user.id)
-    #
-    #     member_name = user_obj.user.username
-    #     team_name = team.team_name
-    #
-    # except User.DoesNotExist or Team.DoesNotExist:
-    #     return None
-
     user_obj = Profile.objects.get(pk=pk)
     member_name = user_obj.user.username
 
@@ -163,9 +126,12 @@ def manage_team(request, operation, pk):
     team_name = team.team_name
 
     if operation == 'add':
-        Team.add_member(team_name, pk)
-        messages.success(request, f'Added {member_name} in {team_name}!')
+        try:
+            Team.add_member(team_name, pk)
+            messages.success(request, f'Added {member_name} in {team_name}!')
 
+        except IntegrityError:
+            messages.warning (request, f'{member_name} is already in {team_name}!')
 
     elif operation == 'remove':
         Team.remove_member(team_name, pk)
@@ -173,14 +139,4 @@ def manage_team(request, operation, pk):
     else:
         return redirect('home')
     return redirect('home')
-
-
-    # context = {
-    #     'user': User.objects.all(),
-    #     'team': Team.objects.all(),
-    #     'profile': Profile.objects.all()
-    # }
-    # return render(request, 'teams/team_manage.html', context)
-    # return redirect('home')
-#
 

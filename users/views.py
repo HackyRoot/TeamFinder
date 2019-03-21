@@ -12,8 +12,10 @@ from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from teams.models import Team
 from django.views.generic import ListView, TemplateView, DetailView, UpdateView
-# from .filters import UserFilter
-# https://stackoverflow.com/questions/36327377/searching-with-modelchoicefield-in-django
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.template import Context
+
 
 def register(request):
     if request.method == 'POST':
@@ -142,3 +144,37 @@ def myteam(request, pk):
     lead_data = Team.objects.filter(team_lead=pk)
     teams = Team.objects.filter(members=pk)
     return render(request, 'users/my_teams.html', context={'teams': teams, 'lead_data': lead_data})
+
+msg_plain = render_to_string('users/email.txt')
+msg_html = render_to_string('users/email.html')
+
+
+def sendInvite(request, pk):
+    user_obj = Profile.objects.get(pk=pk)
+    member_name = user_obj.user.username
+    member_email = user_obj.user.email
+
+    team = Team.objects.get(team_lead=request.user.id)
+    team_name = team.team_name
+
+    d = Context({'username': member_name})
+
+    subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
+    text_content = msg_plain.render(d)
+    html_content = msg_html.render(d)
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+
+    message = ' Hey there'
+    email = EmailMessage(
+        "Team Invitation",
+        'Hello ',
+        'from@example.com',
+        ['to1@example.com', 'to2@example.com'],
+        ['bcc@example.com'],
+        reply_to=['another@example.com'],
+        headers={'Message-ID': 'foo'},
+    )
+    email.send(fail_silently=True)
+    return HttpResponse(member_name+' '+member_email+' '+team_name)

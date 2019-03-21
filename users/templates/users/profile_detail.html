@@ -18,6 +18,7 @@
             <div class="profile-data">
 
             <span>
+                {# display the teams where current user is either team member or team lead #}
 
                 {# if current user is team lead #}
                 <h3 class="team-content">Part of: </h3>
@@ -40,30 +41,18 @@
                     {% endfor %}
                 </div>
 
+            </span>
 
-                {# add members if current user is team lead #}
-{#                <div class="team-content">#}
+            <span>
+            {# add members if current user is team lead #}
+                <div class="team_lead">
                     {% for team in team_data %}
                         {% if team.team_lead == request.user %}
-{#                            <a class="btn btn-danger btn-sm ml-50 mt-1 mb-1" href="#">Add</a>#}
+                            <h4>Add user to team {{ team.team_name }}</h4>
                             <a class="btn btn-danger btn-sm ml-50 mt-1 mb-1" href="{% url 'manage_team' operation='add' pk=prof.id%}">Add</a>
-
-{#                            {% url 'manage_team' operation='add' pk=member.id%}#}
-
-                            <h1>User: {{ request.user }}</h1>
-                            <h1>Leads: {{ team.team_lead }}</h1>
-                            <h1>Teamname: {{ team.team_name }}</h1>
-
                         {% endif %}
                     {% endfor %}
-{#                </div>#}
-{#            {% for prof in profiles %}#}
-{#                {%  %}#}
-{#                {% prof.id == tea%}#}
-{#            {% endfor %}#}
-
-
-
+                </div>
             </span>
 
             <span>
